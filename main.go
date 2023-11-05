@@ -15,20 +15,26 @@ func main() {
 		"https://amazon.com",
 	}
 
+	c := make(chan string)
+
 	for _, link := range links {
-		chceckLink(link)
+		go chceckLink(link, c)
 
 	}
 
+	fmt.Println(<-c)
+
 }
 
-func chceckLink(link string) {
+func chceckLink(link string, c chan string) {
 
 	_, err := http.Get(link)
 	if err != nil {
 		fmt.Println(link, "might be down!")
+		c <- "Might be down I think"
 		return
 	}
 
 	fmt.Println(link, "is up!")
+	c <- "Yep, it is up"
 }
