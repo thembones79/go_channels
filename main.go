@@ -18,15 +18,15 @@ func main() {
 	c := make(chan string)
 
 	for _, link := range links {
-		go chceckLink(link, c)
+		go checkLink(link, c)
+	fmt.Println(<-c)
 
 	}
 
-	fmt.Println(<-c)
 
 }
 
-func chceckLink(link string, c chan string) {
+func checkLink(link string, c chan string) {
 
 	_, err := http.Get(link)
 	if err != nil {
